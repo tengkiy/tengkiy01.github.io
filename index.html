@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCL-90症状自评量表</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+        
+        .header h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        .content {
+            padding: 30px;
+        }
+        
+        .auth-section {
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .auth-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        
+        .auth-input {
+            width: 100%;
+            max-width: 300px;
+            padding: 12px 20px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 40px;
+            font-size: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .question-item {
+            background: #f8f9fa;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+        
+        .question-text {
+            font-size: 16px;
+            color: #333;
+            margin-bottom: 15px;
+            font-weight: 500;
+        }
+        
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .option-label {
+            flex: 1;
+            min-width: 120px;
+            padding: 10px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        
+        .option-label:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .option-label input {
+            display: none;
+        }
+        
+        .option-label input:checked + span {
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .option-label input:checked ~ .option-label {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .option-label.selected {
+            border-color: #667eea;
+            background: #f0f4ff;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: #e0e0e0;
+            border-radius: 3px;
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s;
+        }
+        
+        .result-section {
+            text-align: center;
+        }
+        
+        .score-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+        }
+        
+        .score-card h2 {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        .factor-scores {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        
+        .factor-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: left;
+        }
+        
+        .factor-name {
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 5px;
+        }
+        
+        .factor-score {
+            font-size: 24px;
+            color: #667eea;
+            font-weight: bold;
+        }
+        
+        .suggestion {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        
+        .suggestion h3 {
+            color: #856404;
+            margin-bottom: 10px;
+        }
+        
+        .suggestion p {
+            color: #856404;
+            line-height: 1.6;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .error-msg {
+            color: #dc3545;
+            margin-top: 10px;
+        }
+        
+        @media (max-width: 600px) {
+            .options {
+                flex-direction: column;
+            }
+            
+            .option-label {
+                min-width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>SCL-90症状自评量表</h1>
+            <p>请根据最近一周的实际感受进行评分</p>
+        </div>
+        
+        <div class="content">
+            <!-- 授权验证页面 -->
+            <div id="authSection" class="auth-section">
+                <h2>请输入授权码</h2>
+                <p style="color: #666; margin-bottom: 20px;">每个授权码每天只能使用一次</p>
+                <input type="text" id="authCode" class="auth-input" placeholder="请输入授权码" maxlength="8">
+                <br>
+                <button class="btn" onclick="verifyAuth()">开始测评</button>
+                <p id="authError" class="error-msg hidden"></p>
+            </div>
+            
+            <!-- 问卷页面 -->
+            <div id="questionSection" class="hidden">
+                <div class="progress-bar">
+                    <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+                </div>
+                <p style="text-align: center; color: #666; margin-bottom: 20px;">
+                    <span id="currentQuestion">1</span> / 90
+                </p>
+                
+                <div id="questionsContainer"></div>
+                
+                <div style="text-align: center; margin-top: 30px;">
+                    <button class="btn" onclick="submitAssessment()">提交测评</button>
+                </div>
+            </div>
+            
+            <!-- 结果页面 -->
+            <div id="resultSection" class="hidden">
+                <div class="result-section">
+                    <div class="score-card">
+                        <h2 id="totalScore">0</h2>
+                        <p>总分</p>
+                    </div>
+                    
+                    <h3 style="margin-bottom: 20px; color: #333;">因子分</h3>
+                    <div id="factorScores" class="factor-scores"></div>
+                    
+                    <div id="suggestions"></div>
+                    
+                    <p style="color: #666; margin-top: 30px; font-size: 14px;">
+                        本测评仅供参考，不能替代专业医疗诊断。如有需要，请咨询专业心理医生。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="scl90.js"></script>
+</body>
+</html>
